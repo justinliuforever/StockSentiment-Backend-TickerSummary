@@ -6,7 +6,11 @@ const tickerSummarySchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    summary: {
+    summaryCompany: {
+      type: String,
+      required: true,
+    },
+    summaryPredict: {
       type: String,
       required: true,
     },

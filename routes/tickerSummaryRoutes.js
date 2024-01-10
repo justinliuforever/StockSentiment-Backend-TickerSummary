@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   try {
       // Check for required field
-      if (!req.body.ticker || !req.body.summary || !req.body.createAt) {
+      if (!req.body.ticker || !req.body.summaryCompany || !req.body.summaryPredict || !req.body.createAt) {
           return res.status(400).send({ msg: 'Please include all required fields' });
       }
 
@@ -70,6 +70,23 @@ router.delete('/:ticker', async (req, res) => {
       return res.status(500).send({ msg: error.message });
   }
 });
+
+// Route for deleting all ticker summaries
+router.delete('/confirmDeleteAll/confirm', async (req, res) => {
+    try {
+        const result = await TickerSummary.deleteMany({}); // This deletes all documents
+
+        if (result.deletedCount === 0) {
+            return res.status(404).send({ msg: 'No Ticker Summaries found to delete' });
+        }
+
+        return res.status(200).send({ msg: 'All Ticker Summaries deleted' });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({ msg: error.message });
+    }
+});
+
 
 // Export the router
 export default router;
